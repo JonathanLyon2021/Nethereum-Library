@@ -25,3 +25,29 @@ for(int i = 0; i < 20; i++)
 {
     Console.WriteLine(wallet.GetAccount(i).Address)
 }
+
+
+//SEND ETHEREUM TRANSACTION
+using System;
+using System.Threading.Tasks;
+using NBitcoins;
+using Nethereum.HdWallet;
+using Nethereum.Web3
+using Nethereum.Web3.Accounts;
+
+static async Task Send(Wallet wallet, string fromAddress, string toAddress, double amountOfCoins)
+{
+    Account accountFrom = wallet.GetAccount(fromAddress);
+    string privateKeyFrom = accountFrom.PrivateKey;
+    if(privateKeyFrom == string.Empty) {
+        throw new Exception("Sender address is not from the current wallet");
+    }
+    string ropsten = 'https://ropsten.infura.io/v3/c1f509a577f44113adbcfe2bfc3505cc';
+    var web3 = new Web3(accountFrom, ropsten);
+    var wei = Web3.Convert.ToWei(amountOfCoins);
+    await web3.Transactionmanager.sendTransactionAsync(
+        accountFrom.Address,
+        toAddress,
+        new Nethereum.Hex.HexTypes.HexBigInteger(wei)
+    );
+}
