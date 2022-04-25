@@ -65,22 +65,41 @@
 ////////////////USING NBitcoin library////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-using NBitcoin;
+// using NBitcoin;
 
-key privateKey = new Key();
+// key privateKey = new Key();
 
-//export the private key in wallet import format(WIF)
-var testNetPrivateKey =
-    privateKey.GetBitcoinSecret(Network.TestNet);
-    Console.WriteLine(testNetPrivateKey);
+// //export the private key in wallet import format(WIF)
+// var testNetPrivateKey =
+//     privateKey.GetBitcoinSecret(Network.TestNet);
+//     Console.WriteLine(testNetPrivateKey);
 
-//derive a public key from the private key:
-    PubKey publicKeyTestNet = testNetPrivateKey.PubKey;
-    Console.WriteLine(publicKeyTestNet);
+// //derive a public key from the private key:
+//     PubKey publicKeyTestNet = testNetPrivateKey.PubKey;
+//     Console.WriteLine(publicKeyTestNet);
 
-//generate a bitcoin address from the public key: 
-BitcoinPubKeyAddress addressTestNet = 
-    (BitcoinPubKeyAddress) publicKeyTestNet
-        .GetAddress(ScriptPubKeyType.Legacy, Network.TestNet);
-Console.WriteLine(addressTestNet);
+// //generate a bitcoin address from the public key: 
+// BitcoinPubKeyAddress addressTestNet = 
+//     (BitcoinPubKeyAddress) publicKeyTestNet
+//         .GetAddress(ScriptPubKeyType.Legacy, Network.TestNet);
+// Console.WriteLine(addressTestNet);
+
+// /////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////QBit Ninja Library/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+string address ="2NGZrVvZG92qGYqzTLjCAewvPZ7JE8S8VxE";
+QBitNinjaClient client = new QBitNinjaClient(Network.TestNet);
+decimal totalBalance =0;
+var balance = client.GetBalance(BitcoinAddress.Create(address, Network.TestNet), true).Result();
+foreach(var entry in balance.Operations)
+{
+        foreach(var coin in entry.ReceivedCoins)
+        {
+            Money amount = (Money) coin.Amount();
+            decimal currentAmount = amount.ToDecimal(MoneyUnit.BTC);
+            totalBalance += currentAmount;
+        }
+}
+Console.WriteLine($"Balance of wallet: {totalBalance} BTC");
 
