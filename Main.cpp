@@ -88,18 +88,19 @@
 /////////////////////////QBit Ninja Library/////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-string address ="2NGZrVvZG92qGYqzTLjCAewvPZ7JE8S8VxE";
-QBitNinjaClient client = new QBitNinjaClient(Network.TestNet);
-decimal totalBalance =0;
-var balance = client.GetBalance(BitcoinAddress.Create(address, Network.TestNet), true).Result();
-foreach(var entry in balance.Operations)
-{
-        foreach(var coin in entry.ReceivedCoins)
-        {
-            Money amount = (Money) coin.Amount();
-            decimal currentAmount = amount.ToDecimal(MoneyUnit.BTC);
-            totalBalance += currentAmount;
-        }
-}
-Console.WriteLine($"Balance of wallet: {totalBalance} BTC");
+// string address ="2NGZrVvZG92qGYqzTLjCAewvPZ7JE8S8VxE";
+// QBitNinjaClient client = new QBitNinjaClient(Network.TestNet);
+// decimal totalBalance =0;
+// var balance = client.GetBalance(BitcoinAddress.Create(address, Network.TestNet), true).Result();
+// foreach(var entry in balance.Operations)
+// {
+//         foreach(var coin in entry.ReceivedCoins)
+//         {
+//             Money amount = (Money) coin.Amount();
+//             decimal currentAmount = amount.ToDecimal(MoneyUnit.BTC);
+//             totalBalance += currentAmount;
+//         }
+// }
+// Console.WriteLine($"Balance of wallet: {totalBalance} BTC");
+
 
