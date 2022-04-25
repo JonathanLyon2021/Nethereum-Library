@@ -54,11 +54,33 @@
 
 //new program from guy on youtube
 
-#include<iostream>
-using namespace std;
-int main(){
-    cout<<"Subscribe to us!!";
-    return 0;
-}
+// #include<iostream>
+// using namespace std;
+// int main(){
+//     cout<<"Subscribe to us!!";
+//     return 0;
+// }
 
-//
+//////////////////////////////////////////////////////////////////////
+////////////////USING NBitcoin library////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+using NBitcoin;
+
+key privateKey = new Key();
+
+//export the private key in wallet import format(WIF)
+var testNetPrivateKey =
+    privateKey.GetBitcoinSecret(Network.TestNet);
+    Console.WriteLine(testNetPrivateKey);
+
+//derive a public key from the private key:
+    PubKey publicKeyTestNet = testNetPrivateKey.PubKey;
+    Console.WriteLine(publicKeyTestNet);
+
+//generate a bitcoin address from the public key: 
+BitcoinPubKeyAddress addressTestNet = 
+    (BitcoinPubKeyAddress) publicKeyTestNet
+        .GetAddress(ScriptPubKeyType.Legacy, Network.TestNet);
+Console.WriteLine(addressTestNet);
+
